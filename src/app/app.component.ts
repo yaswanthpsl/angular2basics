@@ -1,10 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+    <div>
+      <ul>
+        <li *ngFor="let message of mail.messages">{{message}}</li>
+      </ul>
+      <app-simple-form 
+        *ngFor="let message of mail.messages"
+        [message]="message"
+        (update)="onUpdate($event)"
+        >
+      </app-simple-form>
+    </div>
+  `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  onUpdate(e) {
+    console.log(e);
+  }
+  constructor(@Inject('mail') private mail) {}
 }
